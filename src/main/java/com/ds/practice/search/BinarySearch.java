@@ -19,7 +19,7 @@ public class BinarySearch {
 
     public static void main(String[] args) {
         int elements[] = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-        int element_to_find = 11;
+        int element_to_find = 6;
         int find_index = search(elements, 0, elements.length-1, element_to_find);
         if (find_index == -1)
             System.out.println("ELEMENT " + element_to_find + " NOT FOUND  !!!!");
@@ -29,7 +29,7 @@ public class BinarySearch {
 
     private static int search(int elements[], int l, int r, int x) {
         if (r >= l) {
-            int mid = l + ((r - 1) >> 1); //() because >> takes precedence over +
+            int mid = l + ((r - l) >> 1); //() because >> takes precedence over +
             int mid_element = elements[mid];
             if (x == mid_element)
                 return mid;
