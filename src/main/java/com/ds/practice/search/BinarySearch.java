@@ -13,6 +13,12 @@ package com.ds.practice.search;
  * So we recure of the right half.
  * 4. Else ( x is smaller ) then recure the left half.
  *
+ * COMPLEXITY :
+ * Worst case performance	O(log n)
+ * Best case performance	O(1)
+ * Average case performance	O(log n)
+ * Worst case space complexity	O(1)
+ *
  * Created by Kishore Routhu on 11/9/16 1:44 PM.
  */
 public class BinarySearch {

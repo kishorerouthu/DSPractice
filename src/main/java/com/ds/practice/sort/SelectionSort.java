@@ -3,6 +3,13 @@ package com.ds.practice.sort;
 /**
  * The selection sort algorithm sorts an array by repeatedly finding the minimum element
  * from unsorted portion and putting that at the end of sorted portion.
+ *
+ * COMPLEXITY :
+ * Worst case performance О(n^2)
+ * Best case performance О(n^2)
+ * Average case performance	О(n^2)
+ * Worst case space complexity	О(n) total, O(1) auxiliary
+ *
  * Created by Kishore Routhu on 17/9/16 11:40 AM.
  */
 public class SelectionSort {
@@ -33,9 +40,9 @@ public class SelectionSort {
     }
 
     private static void swap(int elements[], int a, int b) {
-        int c = elements[a];
-        elements[a] = elements[b];
-        elements[b] = c;
+        elements[a] = elements[a] ^ elements[b];
+        elements[b] = elements[a] ^ elements[b];
+        elements[a] = elements[a] ^ elements[b];
     }
 
     private static void print(int elements[]) {
