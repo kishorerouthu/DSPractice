@@ -1,5 +1,7 @@
 package com.ds.practice.sort;
 
+import com.ds.practice.utils.ArrayUtils;
+
 /**
  * The selection sort algorithm sorts an array by repeatedly finding the minimum element
  * from unsorted portion and putting that at the end of sorted portion.
@@ -16,12 +18,9 @@ public class SelectionSort {
 
     public static void main(String[] args) {
         int elements[] = new int[]{5, 1, 3, 8, 7, 9, 2, 10, 4, 6};
-        System.out.println("ELEMENTS BEFORE SORT :");       // [ 5 1 3 8 7 9 2 10 4 6 ]
-        print(elements);
+        ArrayUtils.print("ELEMENTS BEFORE SORT :", elements);       // [ 5 1 3 8 7 9 2 10 4 6 ]
         sort(elements);
-        System.out.println();
-        System.out.println("ELEMENTS AFTER SORT ( ASCENDING ) :"); // [ 1 2 3 4 5 6 7 8 9 10 ]
-        print(elements);
+        ArrayUtils.print("ELEMENTS AFTER SORT ( ASCENDING ) :", elements); // [ 1 2 3 4 5 6 7 8 9 10 ]
     }
 
     private static void sort(int elements[]) {
@@ -35,20 +34,9 @@ public class SelectionSort {
                 j++;
             }
             if (i != min)
-                swap(elements, i, min);
+                ArrayUtils.swapIndexes(elements, i, min);
         }
     }
 
-    private static void swap(int elements[], int a, int b) {
-        elements[a] = elements[a] ^ elements[b];
-        elements[b] = elements[a] ^ elements[b];
-        elements[a] = elements[a] ^ elements[b];
-    }
 
-    private static void print(int elements[]) {
-        System.out.print("[ ");
-        for (int element : elements)
-            System.out.print(element + " ");
-        System.out.print("]");
-    }
 }

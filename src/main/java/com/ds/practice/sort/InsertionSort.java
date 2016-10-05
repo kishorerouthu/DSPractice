@@ -1,5 +1,7 @@
 package com.ds.practice.sort;
 
+import com.ds.practice.utils.ArrayUtils;
+
 /**
  * Insertion sort takes the element from unsorted portion and find the
  * right position in sorted portion and insert in that position.
@@ -55,13 +57,10 @@ public class InsertionSort {
 
     public static void main(String[] args) {
         int elements[] = new int[]{5, 1, 3, 8, 7, 9, 2, 10, 4, 6};
-        //int elements[] = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-        System.out.println("ELEMENTS BEFORE SORT :");       // [ 5 1 3 8 7 9 2 10 4 6 ]
-        print(elements);
+        //int data[] = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+        ArrayUtils.print("ELEMENTS BEFORE SORT :", elements);  // [ 5 1 3 8 7 9 2 10 4 6 ]
         sort(elements);
-        System.out.println();
-        System.out.println("ELEMENTS AFTER SORT ( ASCENDING ) :"); // [ 1 2 3 4 5 6 7 8 9 10 ]
-        print(elements);
+        ArrayUtils.print("ELEMENTS AFTER SORT ( ASCENDING ) :", elements); // [ 1 2 3 4 5 6 7 8 9 10 ]
     }
 
     private static void sort(int elements[]) {
@@ -75,12 +74,5 @@ public class InsertionSort {
             }
             elements[j] = x;
         }
-    }
-
-    private static void print(int elements[]) {
-        System.out.print("[ ");
-        for (int element : elements)
-            System.out.print(element + " ");
-        System.out.print("]");
     }
 }
