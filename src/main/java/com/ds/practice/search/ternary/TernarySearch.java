@@ -1,6 +1,17 @@
-package com.ds.practice.search;
+package com.ds.practice.search.ternary;
 
 /**
+ * Similarly like binary search, ternary search is divide and conquer algorithm and
+ * for it array should be sorted in which we are looking for the element.
+ * In this search, after each iteration it neglects the 2/3 part of the array
+ * and repeats the same operations on the remaining 1/3 part of the array.
+ *
+ * COMPLEXITY:
+ * Worst case performance	O(log n)
+ * Best case performance	O(1)
+ * Average case performance	O(log n)
+ * Worst case space complexity	O(1)
+ *
  * Created by Kishore Routhu on 6/10/16 12:18 AM.
  */
 public class TernarySearch {

@@ -1,4 +1,4 @@
-package com.ds.practice.search;
+package com.ds.practice.search.binary;
 
 /**
  * Binary search is an efficient algorithm for finding an item from ordered list OR array

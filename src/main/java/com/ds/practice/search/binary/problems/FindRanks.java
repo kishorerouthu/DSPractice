@@ -1,4 +1,4 @@
-package com.ds.practice.search;
+package com.ds.practice.search.binary.problems;
 
 /**
  * Created by Kishore Routhu on 3/10/16 10:42 PM.
