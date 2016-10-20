@@ -100,6 +100,46 @@ METHOD 1:  Brute Force
                 Time complexity : O(n^2)
 
 METHOD 2 : Divide and Conquer
+           Divide the array in to 2 half's and find the maximum sum of each part recursively and find the crossing (
+           left and right) sum as well.
+
+           ALGORITHM :
+                        maximum_sum_sub_array(arr[], n) {
+                               if (n == 1)
+                                    return arr[0];
+                               m = n / 2;
+
+                               LeftMSS = maximum_sum_sub_array(arr, m);
+                               RightMSS = maximum_sum_sub_array(arr, n-m);
+
+                               leftSum = -INF;
+                               rightSum = -INF;
+                               sum = 0;
+
+                               for(i-> m to n) {
+                                    sum += arr[i];
+                                    rightSum = max (rightSum, sum);
+                               }
+
+                               sum = 0;
+                               for(i->m-1 to 0) {
+                                    sum += arr[i];
+                                    leftSum = max (leftSum, sum);
+                               }
+                               ans = max(LeftMSS, rightMSS);
+                               return max(ans, leftSum + rightSum);
+                        }
+
+               Evaluation :
+                                        7
+                                [-2, -3, 4, -1, -2, 1, 5, -3]
+                            4                               6
+                         [-2,-3,4,-1]                 [-2, 1, 5, -1]
+                         -2         4                   1          5
+                     [-2,-3]     [4,-1]             [-2,1]      [5,-1]
+                  -2        -3  4      -1         -2       1    5     -1
+                    [-2] [-3]   [4]  [-1]         [-2]  [1]    [5]  [-1]
+
 
 
 METHOD 3 : Kadane's Algorithm
