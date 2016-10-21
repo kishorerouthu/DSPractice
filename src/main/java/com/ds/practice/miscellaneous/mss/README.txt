@@ -143,3 +143,45 @@ METHOD 2 : Divide and Conquer
 
 
 METHOD 3 : Kadane's Algorithm
+           Simple idea of the Kadane's algorithm is to look for all positive contiguous segments of the array.
+           And keep track of maximum sum contiguous segment among all positive segments. Each time we get a positive
+           sum compare it with max so far and update max so far if it is greater than max_so_far.
+
+           MSS(arr[], n) {
+                sum = 0;
+                ans = 0;
+                for (i -> 0 to n) {
+                    if (sum + arr[i] > 0) {
+                        sum += arr[i];
+                        mss = max (sum, ans);
+                    } else {
+                        sum = 0;
+                    }
+                }
+                return ans;
+           }
+
+           Note : Algorithm doesn't work for all negative numbers. It simply returns 0 if all numbers are negative.
+                  For handling this we can add an extra phase before actual implementation.
+                  The phase will look if all numbers are negative, if they are it will return maximum of them (or
+                  smallest in terms of absolute value). There may be other ways to handle it though.
+
+           Following algorithm works even for all negative numbers;
+
+           MSS(arr[], n) {
+                sum = 0;
+                ans = -INF;
+                neg = -INF;
+                for (i -> 0 to n) {
+                    if(sum + arr[i] > 0){
+                        sum += arr[i];
+                        ans = max(ans, sum);
+                    } else {
+                        sum = 0;
+                    }
+
+                    if(arr[i] > 0)
+                        neg = max(arr[i], neg);
+                }
+                return max(ans, neg);
+           }
