@@ -40,7 +40,7 @@ public class FindOccurrencesOfKey {
 
     public static void main(String[] args) {
         int a[] = new int[]{0, 1, 2, 3, 5, 5, 5, 5, 8, 9, 10};
-        int key = 5;
+        int key = 10;
         int left = getLeftMost(a, 0, a.length - 1, key);
         int right = getRightMost(a, 0, a.length - 1, key);
         int n = (a[left] == key && a[right] == key) ? (right - left + 1) : 0;

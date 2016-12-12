@@ -1,4 +1,4 @@
-package com.ds.practice.sort;
+package com.ds.practice.sort.bubblesort;
 
 import com.ds.practice.utils.ArrayUtils;
 
@@ -14,7 +14,7 @@ import com.ds.practice.utils.ArrayUtils;
  * Best case performance O(n)
  * Average case performance O(n^2)
  * Worst case space complexity O(1) auxiliary
- *Worst case space complexity	O(1)
+ * Worst case space complexity	O(1)
  * Created by Kishore Routhu on 17/9/16 1:23 PM.
  */
 public class BubbleSort {
