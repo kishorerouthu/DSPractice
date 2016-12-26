@@ -1,4 +1,4 @@
-package com.ds.practice.sort.bubblesort.problems;
+package com.ds.practice.sort.bubble.problems;
 
 import java.io.BufferedReader;
 import java.io.IOException;

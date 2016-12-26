@@ -1,4 +1,4 @@
-package com.ds.practice.sort.bubblesort.problems;
+package com.ds.practice.sort.bubble.problems;
 
 /**
  * Created by Kishore Routhu on 8/11/16 6:04 PM.

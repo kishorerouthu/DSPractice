@@ -1,4 +1,4 @@
-package com.ds.practice.sort;
+package com.ds.practice.sort.selection;
 
 import com.ds.practice.utils.ArrayUtils;
 

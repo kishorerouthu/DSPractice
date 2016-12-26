@@ -1,4 +1,4 @@
-package com.ds.practice.sort.bubblesort;
+package com.ds.practice.sort.bubble;
 
 import com.ds.practice.utils.ArrayUtils;
 
