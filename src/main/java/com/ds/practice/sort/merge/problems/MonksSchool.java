@@ -66,7 +66,6 @@ public class MonksSchool {
         PrintWriter out = new PrintWriter(System.out);
         InputReader in = new InputReader(System.in);
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = in.readInt(); //no of teachers
         int M = in.readInt(); //no of students
 
