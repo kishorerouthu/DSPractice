@@ -82,7 +82,8 @@ public class ProAndConList {
             }
 
             long ans = (happy[index] + happy[index1]) - (total_angry - (angry[index] + angry[index1]));
-            System.out.println((ans));
+            out.println(ans);
+            out.close();
         }
     }
 
