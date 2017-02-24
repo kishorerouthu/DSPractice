@@ -1,4 +1,4 @@
-package com.ds.practice.sort;
+package com.ds.practice.sort.quick;
 
 import com.ds.practice.utils.ArrayUtils;
 
@@ -50,7 +50,7 @@ public class QuickSort {
     }
 
     private static int partition(int data[], int p, int r) {
-        int x = data[r];
+        int x = data[r]; //Pivot
         int i = p - 1;
         for (int j=p; j<r; j++) {
             if (data[j] <= x) {

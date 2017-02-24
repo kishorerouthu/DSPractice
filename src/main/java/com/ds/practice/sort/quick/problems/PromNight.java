@@ -1,81 +1,86 @@
-package com.ds.practice.sort.merge.problems;
+package com.ds.practice.sort.quick.problems;
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
 /**
- * Created by kishore on 10/2/17.
+ * Created by kishore on 17/2/17.
  */
-public class ScoringInExam1 {
+public class PromNight {
 
     public static void main(String[] args) {
-        InputReader sc = new InputReader(System.in);
-        int nQuestions = sc.readInt();
-        int nQueries = sc.readInt();
-        Question[] questions = new Question[nQuestions];
-        for(int i=0;i<nQuestions;i++) {
-            int timeTaken = sc.readInt();
-            questions[i] = new Question(timeTaken);
-        }
-        MergeSort.sort(questions, new Question[nQuestions], nQuestions);
-        sc.readInt();
-        for(int i=1;i<nQuestions;i++) {
-            questions[i].score = sc.readInt();
-            questions[i].timeTaken += questions[i - 1].timeTaken;
-        }
-        StringBuffer output = new StringBuffer();
-         System.out.println(output);
-    }
+        InputReader in = new InputReader(System.in);
+        PrintWriter out = new PrintWriter(System.out);
 
-    static class MergeSort {
+        int t = in.readInt();
+        for (int i = 0; i < t; i++) {
+            int m = in.readInt();
+            int n = in.readInt();
 
-        public static void sort(Question[] A, Question[] B, int N) {
-            B = Arrays.copyOf(A, N);
-            splitMerge(B, 0, N, A);
-        }
-
-        private static void splitMerge(Question[] B, int low, int high, Question[] A) {
-            if(high - low < 2) {
-                return;
+            if (m > n) {
+                out.println("NO");
+                continue;
             }
-            int mid = (low + high) / 2;
-            splitMerge(A, low, mid, B);
-            splitMerge(A, mid, high, B);
-            merge(B, low, mid, high, A);
-        }
 
-        private static void merge(Question[] A, int low, int mid, int high, Question[] B) {
-            int i = low, j = mid;
-            for(int k = low; k < high; k++) {
-                if(i < mid && (j >= high || A[i].timeTaken > A[j].timeTaken)) {
-                    B[k] = A[i];
-                    i++;
-                }else{
-                    B[k] = A[j];
-                    j++;
+            int boys[] = new int[m];
+            for (int j = 0; j < m; j++) {
+                boys[j] = in.readInt();
+            }
+            sort(boys, 0, m-1);
+
+            int girls[] = new int[n];
+            for (int k = 0; k < n; k++) {
+                girls[k] = in.readInt();
+            }
+            sort(girls, 0, n-1);
+
+            String result = "YES";
+            for (int l = 0; l < m; l++) {
+                if (boys[l] <= girls[l]) {
+                    result = "NO";
+                    break;
                 }
             }
+
+            out.println(result);
         }
+
+        out.flush();
+        out.close();
     }
 
 
-    static class Question implements Comparable<Question>{
+    private static void sort(int a[], int l, int r) {
+        if (l < r) {
+            int p = parition(a, l ,r);
+            sort(a, l, p-1);
+            sort(a, p+1, r);
+        }
+    }
 
-        int score;
-        int timeTaken;
+    private static int parition(int a[], int l, int r) {
 
-        public Question(int timeTaken) {
-            this.timeTaken = timeTaken;
+        int i = l-1;
+        int j = l;
+        int p = a[r];
+
+        while (j < r) {
+
+            if (a[j] < p) {
+                i++;
+                int temp = a[j];
+                a[j] = a[i];
+                a[i] = temp;
+            }
+            j++;
         }
 
-        public Question(int score, int timeTaken) {
-            this.score = score;
-            this.timeTaken = timeTaken;
-        }
-
-        public int compareTo(Question that) {
-            return that.timeTaken - this.timeTaken;
-        }
+        //Place pivot at right position i+1
+        a[r] = a[i+1];
+        a[i+1] = p;
+        return i+1;
 
     }
 
@@ -85,7 +90,7 @@ public class ScoringInExam1 {
         private byte[] buf = new byte[1024];
         private int curChar;
         private int numChars;
-        private SpaceCharFilter filter;
+        private InputReader.SpaceCharFilter filter;
 
         public InputReader(InputStream stream) {
             this.stream = stream;
