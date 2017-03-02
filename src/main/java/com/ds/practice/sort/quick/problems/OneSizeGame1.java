@@ -3,18 +3,15 @@ package com.ds.practice.sort.quick.problems;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Created by kishore on 19/2/17.
+ * Created by kishore on 27/2/17.
  */
-public class OneSizedGame {
+public class OneSizeGame1 {
 
     public static void main(String[] args) {
 
         long startTime = System.currentTimeMillis();
-
 
         PrintWriter out = new PrintWriter(System.out);
         InputReader in = new InputReader(System.in);
@@ -22,24 +19,42 @@ public class OneSizedGame {
         int t = in.readInt();
         for (int i = 0; i < t; i++) {
             int n = in.readInt();
+            int a[] = new int[n];
+
             int min_value = Integer.MAX_VALUE;
             int min_index = 0;
-            List<Integer> a = new ArrayList<Integer>(n);
+            int totalNeg = 0;
             for (int j = 0; j < n; j++) {
-                int value = in.readInt();
-                if (value > -1 && min_value > value) {
-                    min_value = value;
-                    min_index = j+1;
-                }
-                a.add(value);
+                a[j] = in.readInt();
+                if (a[j] > -1) {
+                    if (min_value > a[j]) {
+                        min_value = a[j];
+                        min_index = j + 1;
+                    }
+                } else
+                    totalNeg++;
             }
 
+            int indexCount = min_index;
+            boolean removed[] = new boolean[n];
             do {
-                 reduceList(a, a.get(min_index-1));
-                 min_index = sinkArray(a, min_index);
-            } while ( a.size() != 0 && a.size() != 1);
+                min_value = Integer.MAX_VALUE;
+                for (int k = 0; k < n; k++) {
+                    int value = a[k] - indexCount;
+                    if (removed[k])
+                        continue;
+                    if (value < 0) {
+                        removed[k] = true;
+                        totalNeg++;
+                    } else if (value < min_value) {
+                        min_index = k - totalNeg + 1;
+                        min_value = a[k] - indexCount;
+                    }
+                }
+                indexCount += min_index;
+            } while (totalNeg != n-1 && totalNeg != n);
 
-            out.println(a.size() == 0? "Kushagra" : "Ladia");
+            out.println(totalNeg == n-1 ? "Ladia" : "Kushagra");
         }
 
         out.flush();
@@ -47,39 +62,6 @@ public class OneSizedGame {
 
         long endTime = System.currentTimeMillis();
         System.out.println(endTime - startTime);
-    }
-
-    private static void reduceList(List<Integer> a, int min_value) {
-        for (int i = 0; i < a.size(); i++) {
-            a.set(i, a.get(i) - min_value);
-        }
-
-    }
-
-    private static int sinkArray(List<Integer> a, int min_index) {
-        Integer arr[] = new Integer[a.size()];
-        a.toArray(arr);
-        a.clear();
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = arr[i] - min_index;
-            if (arr[i] > -1) {
-                a.add(arr[i]);
-            }
-        }
-        return getMinIndex(a);
-    }
-
-    private static int getMinIndex(List<Integer> a) {
-        int min = 0;
-        int min_value = Integer.MAX_VALUE;
-        for (int i = 0; i < a.size(); i++) {
-            int value = a.get(i);
-            if (value < min_value) {
-                min_value = value;
-                min = i + 1;
-            }
-        }
-        return min;
     }
 
     static final class InputReader {

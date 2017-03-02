@@ -1,85 +1,79 @@
-package com.ds.practice.sort.quick.problems;
+package com.ds.practice.sort.counting.problems;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by kishore on 19/2/17.
+ * Created by kishore on 28/2/17.
+ *
+ *Problem Statement
+ *
+ *Given an array A of N numbers, find the number of distinct pairs (i, j) such that j >=i and A[i] = A[j].
+ *
+ * First line of the input contains number of test cases T.
+ * Each test case has two lines, first line is the number N, followed by a line consisting of N integers which are the elements of array A.
+ *
+ * For each test case print the number of distinct pairs.
+ *
+ * Constraints
+ * 1 <= T <= 10
+ * 1 <= N <= 10^6
+ * -10^6 <= A[i] <= 10^6 for 0 <= i < N
+ *
+ * SAMPLE INPUT
+ * 3
+ * 4
+ * 1 2 3 4
+ * 3
+ * 1 2 1
+ * 5
+ * 1 1 1 1 1
+ *
+ * SAMPLE OUTPUT
+ * 4
+ * 4
+ * 15
+ *
+ *
  */
-public class OneSizedGame {
+public class FindingPairs {
 
     public static void main(String[] args) {
 
-        long startTime = System.currentTimeMillis();
-
-
-        PrintWriter out = new PrintWriter(System.out);
         InputReader in = new InputReader(System.in);
+        PrintWriter out = new PrintWriter(System.out);
 
         int t = in.readInt();
         for (int i = 0; i < t; i++) {
             int n = in.readInt();
-            int min_value = Integer.MAX_VALUE;
-            int min_index = 0;
-            List<Integer> a = new ArrayList<Integer>(n);
+            Map<Integer, Integer> map = new HashMap<Integer, Integer>();
             for (int j = 0; j < n; j++) {
-                int value = in.readInt();
-                if (value > -1 && min_value > value) {
-                    min_value = value;
-                    min_index = j+1;
-                }
-                a.add(value);
+                int val = in.readInt();
+                Integer count = map.get(val);
+                if (count == null)
+                    count = 0;
+                map.put(val, ++count);
             }
 
-            do {
-                 reduceList(a, a.get(min_index-1));
-                 min_index = sinkArray(a, min_index);
-            } while ( a.size() != 0 && a.size() != 1);
+            int total_count = 0;
+            for(Integer count : map.values())
+                total_count += possibleCounts(count);
 
-            out.println(a.size() == 0? "Kushagra" : "Ladia");
+            out.println(total_count);
         }
 
         out.flush();
         out.close();
-
-        long endTime = System.currentTimeMillis();
-        System.out.println(endTime - startTime);
     }
 
-    private static void reduceList(List<Integer> a, int min_value) {
-        for (int i = 0; i < a.size(); i++) {
-            a.set(i, a.get(i) - min_value);
-        }
-
-    }
-
-    private static int sinkArray(List<Integer> a, int min_index) {
-        Integer arr[] = new Integer[a.size()];
-        a.toArray(arr);
-        a.clear();
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = arr[i] - min_index;
-            if (arr[i] > -1) {
-                a.add(arr[i]);
-            }
-        }
-        return getMinIndex(a);
-    }
-
-    private static int getMinIndex(List<Integer> a) {
-        int min = 0;
-        int min_value = Integer.MAX_VALUE;
-        for (int i = 0; i < a.size(); i++) {
-            int value = a.get(i);
-            if (value < min_value) {
-                min_value = value;
-                min = i + 1;
-            }
-        }
-        return min;
+    private static int possibleCounts(int count) {
+        int result = count;
+        count--;
+        result += ((count * (count+1)) / 2);
+        return result;
     }
 
     static final class InputReader {
