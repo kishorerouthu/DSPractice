@@ -1,4 +1,4 @@
-package com.ds.practice.sort.quick.problems;
+package com.ds.practice.search.linear.problems;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,9 +6,9 @@ import java.io.PrintWriter;
 import java.util.InputMismatchException;
 
 /**
- * Created by kishore on 17/2/17.
+ * Created by kishore on 13/3/17.
  */
-public class PromNight {
+public class MonTakesWalk {
 
     static int numChar;
     static int curChar;
@@ -22,77 +22,22 @@ public class PromNight {
 
         int t = readInt();
         for (int i = 0; i < t; i++) {
-            int m = readInt();
-            int n = readInt();
-
-            int b[] = new int[m];
-            for (int j = 0; j < m; j++) {
-                b[j] = readInt();
+            String data = readString();
+            char a[] = data.toCharArray();
+            int count = 0;
+            for (char ch : a) {
+                if (isVowel(ch))
+                    count++;
             }
-
-            int g[] = new int[n];
-            for (int k = 0; k < n; k++) {
-                g[k] = readInt();
-            }
-
-            String result = "";
-            if (m > n) {
-                result = "NO";
-            } else {
-                sort(b, 0, m-1);
-                sort(g, 0, n-1);
-
-                int k = 0;
-                int l = 0;
-                int found = 0;
-                while (k < m && l < n) {
-                    if (b[k] > g[l]) {
-                        k++; l++; found++;
-                    } else {
-                        l++;
-                    }
-                }
-
-                result = (found == m) ? "YES" : "NO";
-            }
-            out.println(result);
+            out.println(count);
         }
 
         out.flush();
         out.close();
     }
 
-
-    private static void sort(int a[], int l, int r) {
-        if (l < r) {
-            int p = parition(a, l ,r);
-            sort(a, l, p-1);
-            sort(a, p+1, r);
-        }
-    }
-
-    private static int parition(int a[], int l, int r) {
-
-        int i = l-1;
-        int j = l;
-        int p = a[r];
-
-        while (j < r) {
-
-            if (a[j] < p) {
-                i++;
-                int temp = a[j];
-                a[j] = a[i];
-                a[i] = temp;
-            }
-            j++;
-        }
-
-        //Place pivot at right position i+1
-        a[r] = a[i+1];
-        a[i+1] = p;
-        return i+1;
-
+    private static boolean isVowel(char ch) {
+        return ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U';
     }
 
     public static int read() throws IOException {

@@ -1,4 +1,4 @@
-package com.ds.practice.sort.quick.problems;
+package com.ds.practice.sort.merge.problems;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,94 +6,87 @@ import java.io.PrintWriter;
 import java.util.InputMismatchException;
 
 /**
- * Created by kishore on 17/2/17.
+ * Created by kishore on 9/3/17.
  */
-public class PromNight {
+public class MonkAndModuloSorting {
 
     static int numChar;
     static int curChar;
     static byte[] buffer = new byte[1024];
     static InputStream stream;
     static PrintWriter out;
+    static long key;
 
     public static void main(String[] args) throws IOException {
+
         stream = System.in;
         out = new PrintWriter(System.out);
 
-        int t = readInt();
-        for (int i = 0; i < t; i++) {
-            int m = readInt();
-            int n = readInt();
+        int n = readInt();
+        key = readLong();
 
-            int b[] = new int[m];
-            for (int j = 0; j < m; j++) {
-                b[j] = readInt();
-            }
+        long a[] = new long[n];
+        for (int i = 0; i < n; i++)
+              a[i] = readLong();
 
-            int g[] = new int[n];
-            for (int k = 0; k < n; k++) {
-                g[k] = readInt();
-            }
+        mergeSort(a, 0, n-1);
 
-            String result = "";
-            if (m > n) {
-                result = "NO";
-            } else {
-                sort(b, 0, m-1);
-                sort(g, 0, n-1);
-
-                int k = 0;
-                int l = 0;
-                int found = 0;
-                while (k < m && l < n) {
-                    if (b[k] > g[l]) {
-                        k++; l++; found++;
-                    } else {
-                        l++;
-                    }
-                }
-
-                result = (found == m) ? "YES" : "NO";
-            }
-            out.println(result);
-        }
+        for (long val : a)
+             out.printf("%d ", val);
 
         out.flush();
         out.close();
     }
 
-
-    private static void sort(int a[], int l, int r) {
-        if (l < r) {
-            int p = parition(a, l ,r);
-            sort(a, l, p-1);
-            sort(a, p+1, r);
+    private static void mergeSort(long a[], int l, int r) {
+        if ( l < r) {
+            int m = (l + r) >> 1;
+            mergeSort(a, l, m);
+            mergeSort(a, m + 1, r);
+            merge(a, l, m, r);
         }
     }
 
-    private static int parition(int a[], int l, int r) {
+    private static void merge(long a[], int l, int m, int r) {
 
-        int i = l-1;
-        int j = l;
-        int p = a[r];
+        int n1 = m - l + 1;
+        int n2 = r - m;
 
-        while (j < r) {
+        long left[] = new long[n1];
+        long right[] = new long[n2];
 
-            if (a[j] < p) {
-                i++;
-                int temp = a[j];
-                a[j] = a[i];
-                a[i] = temp;
-            }
-            j++;
+        for (int i = 0; i < n1; i++)
+            left[i] = a[l + i];
+
+
+        for (int j = 0; j < n2; j++)
+            right[j] = a[m + 1 + j];
+
+
+        int i = 0;
+        int j = 0;
+        int k = l;
+
+        while (i < n1 && j < n2) {
+
+            long rem1 = left[i] % key;
+            long rem2 = right[j] % key;
+
+            if (rem1 <= rem2)
+                a[k++] = left[i++];
+            else
+                a[k++] = right[j++];
         }
 
-        //Place pivot at right position i+1
-        a[r] = a[i+1];
-        a[i+1] = p;
-        return i+1;
+        while (i < n1)
+            a[k++] = left[i++];
+
+        while (j < n2)
+            a[k++] = right[j++];
+
 
     }
+
 
     public static int read() throws IOException {
         if (numChar <= curChar) {
@@ -155,4 +148,5 @@ public class PromNight {
     public static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }
+
 }

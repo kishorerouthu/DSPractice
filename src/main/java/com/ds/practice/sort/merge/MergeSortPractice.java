@@ -1,4 +1,4 @@
-package com.ds.practice.sort.quick.problems;
+package com.ds.practice.sort.merge;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,9 +6,30 @@ import java.io.PrintWriter;
 import java.util.InputMismatchException;
 
 /**
- * Created by kishore on 17/2/17.
+ * Created by kishore on 8/3/17.
+ *
+ * Given an array A on size N, you need to find the number of ordered pairs
+ * (i,j) such that i<j and A[i]>A[j].
+ *
+ * Input:
+ * First line contains one integer N, size of array.
+ * Second line contains N space separated integers denoting the elements of the array A.
+ *
+ * Output:
+ * Print the number of ordered pairs (i,j) such that i<j and A[i]>A[j].
+ *
+ * Constraints: 1≤N≤106
+ * 	     1≤A[i]≤106
+ *
+ * SAMPLE INPUT
+ * 5
+ *
+ * 1 4 3 2 5
+ * SAMPLE OUTPUT
+ * 3
  */
-public class PromNight {
+public class MergeSortPractice {
+
 
     static int numChar;
     static int curChar;
@@ -16,83 +37,77 @@ public class PromNight {
     static InputStream stream;
     static PrintWriter out;
 
-    public static void main(String[] args) throws IOException {
+    static long count = 0;
+
+    public static void main(String args[] ) throws Exception {
+
         stream = System.in;
         out = new PrintWriter(System.out);
 
-        int t = readInt();
-        for (int i = 0; i < t; i++) {
-            int m = readInt();
-            int n = readInt();
+        int n = readInt();
 
-            int b[] = new int[m];
-            for (int j = 0; j < m; j++) {
-                b[j] = readInt();
-            }
-
-            int g[] = new int[n];
-            for (int k = 0; k < n; k++) {
-                g[k] = readInt();
-            }
-
-            String result = "";
-            if (m > n) {
-                result = "NO";
-            } else {
-                sort(b, 0, m-1);
-                sort(g, 0, n-1);
-
-                int k = 0;
-                int l = 0;
-                int found = 0;
-                while (k < m && l < n) {
-                    if (b[k] > g[l]) {
-                        k++; l++; found++;
-                    } else {
-                        l++;
-                    }
-                }
-
-                result = (found == m) ? "YES" : "NO";
-            }
-            out.println(result);
+        int a[] = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = readInt();
         }
 
+        mergeSort(a, 0, a.length - 1);
+
+        out.println(count);
         out.flush();
-        out.close();
     }
 
-
-    private static void sort(int a[], int l, int r) {
+    private static void mergeSort(int a[], int l, int r) {
+        int count = 0;
         if (l < r) {
-            int p = parition(a, l ,r);
-            sort(a, l, p-1);
-            sort(a, p+1, r);
+            int m = (l + r) >> 1;
+            mergeSort(a, l, m);
+            mergeSort(a, m + 1, r);
+            merge(a, l, m, r);
         }
     }
 
-    private static int parition(int a[], int l, int r) {
+    private static void merge(int a[], int l, int m, int r) {
 
-        int i = l-1;
-        int j = l;
-        int p = a[r];
+        int n1 = m - l + 1;
+        int n2 = r - m;
 
-        while (j < r) {
+        int left[] = new int[n1];
+        int right[] = new int[n2];
 
-            if (a[j] < p) {
+        for (int i = 0; i < n1; i++)
+            left[i] = a[l + i];
+
+        for (int j = 0; j < n2; j++)
+            right[j] = a[m + 1 + j];
+
+
+        int i = 0;
+        int j = 0;
+        int k = l;
+        while (i < n1 && j < n2) {
+            if (left[i]  > right[j]) {
+                a[k] = right[j];
+                j++;
+                count +=  (m - (i + l) + 1);
+            } else {
+                a[k] = left[i];
                 i++;
-                int temp = a[j];
-                a[j] = a[i];
-                a[i] = temp;
             }
-            j++;
+            k++;
         }
 
-        //Place pivot at right position i+1
-        a[r] = a[i+1];
-        a[i+1] = p;
-        return i+1;
+        while (i < n1) {
+            a[k] = left[i];
+            i++;
+            k++;
+        }
 
+        while (j < n2) {
+            a[k] = right[j];
+            j++;
+            k++;
+        }
     }
 
     public static int read() throws IOException {

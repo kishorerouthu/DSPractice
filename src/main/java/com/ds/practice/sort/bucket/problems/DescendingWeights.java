@@ -1,14 +1,51 @@
-package com.ds.practice.sort.quick.problems;
+package com.ds.practice.sort.bucket.problems;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
+import java.util.List;
 
 /**
- * Created by kishore on 17/2/17.
+ * Created by kishore on 12/3/17.
+ *
+ * You have been given an array A of size N and an integer K.
+ * This array consists of N integers ranging from 1 to 10^7.
+ * Each element in this array is said to have a Special Weight.
+ * The special weight of an element a[i] is a[i]%K.
+ *
+ * You now need to sort this array in Non-Increasing order of the weight of each element,
+ * i.e the element with the highest weight should appear first,
+ * then the element with the second highest weight and so on.
+ * In case two elements have the same weight, the one with the lower value should appear in the output first.
+ *
+ * Input Format:
+ *
+ * The first line consists of two space separated integers N and K.
+ * The next line consists of N space separated integers denoting the elements of array A.
+ *
+ * Output Format:
+ *
+ * Print N space separated integers denoting the elements of the array in the order in which they are required.
+ *
+ * Constraints:
+ * 1≤N≤105
+ * 1≤A[i]≤107
+
+ * Note:
+ * You need to print the value of each element and not their weight.
+
+ * SAMPLE INPUT
+ * 5 2
+ * 1 2 3 4 5
+
+ * SAMPLE OUTPUT
+ * 1 3 5 2 4
+ *
  */
-public class PromNight {
+public class DescendingWeights {
 
     static int numChar;
     static int curChar;
@@ -17,82 +54,34 @@ public class PromNight {
     static PrintWriter out;
 
     public static void main(String[] args) throws IOException {
+
         stream = System.in;
         out = new PrintWriter(System.out);
 
-        int t = readInt();
-        for (int i = 0; i < t; i++) {
-            int m = readInt();
-            int n = readInt();
-
-            int b[] = new int[m];
-            for (int j = 0; j < m; j++) {
-                b[j] = readInt();
-            }
-
-            int g[] = new int[n];
-            for (int k = 0; k < n; k++) {
-                g[k] = readInt();
-            }
-
-            String result = "";
-            if (m > n) {
-                result = "NO";
-            } else {
-                sort(b, 0, m-1);
-                sort(g, 0, n-1);
-
-                int k = 0;
-                int l = 0;
-                int found = 0;
-                while (k < m && l < n) {
-                    if (b[k] > g[l]) {
-                        k++; l++; found++;
-                    } else {
-                        l++;
-                    }
-                }
-
-                result = (found == m) ? "YES" : "NO";
-            }
-            out.println(result);
+        int n =  readInt();
+        int k = readInt();
+        int a[] = new int[n];
+        List<Integer> b[] = new List[k];
+        int j = 0;
+        for (int i = 0; i < n; i++) {
+            a[i] = readInt();
+            j = a[i] % k;
+            if (b[j] == null)
+                b[j] = new ArrayList<Integer>();
+            b[j].add(a[i]);
         }
+
+        for (int i = k-1; i >= 0; i--)
+            if (b[i] != null) {
+                Collections.sort(b[i]);
+                for (int l = 0; l < b[i].size(); l++)
+                    out.print(b[i].get(l) + " ");
+            }
+
+
 
         out.flush();
         out.close();
-    }
-
-
-    private static void sort(int a[], int l, int r) {
-        if (l < r) {
-            int p = parition(a, l ,r);
-            sort(a, l, p-1);
-            sort(a, p+1, r);
-        }
-    }
-
-    private static int parition(int a[], int l, int r) {
-
-        int i = l-1;
-        int j = l;
-        int p = a[r];
-
-        while (j < r) {
-
-            if (a[j] < p) {
-                i++;
-                int temp = a[j];
-                a[j] = a[i];
-                a[i] = temp;
-            }
-            j++;
-        }
-
-        //Place pivot at right position i+1
-        a[r] = a[i+1];
-        a[i+1] = p;
-        return i+1;
-
     }
 
     public static int read() throws IOException {
@@ -155,4 +144,5 @@ public class PromNight {
     public static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }
+
 }

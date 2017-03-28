@@ -20,27 +20,41 @@ import com.ds.practice.utils.ArrayUtils;
 public class BubbleSort {
 
     public static void main(String[] args) {
-        int elements[] = new int[]{5, 1, 3, 8, 7, 9, 2, 10, 4, 6};
+        int a[] = new int[]{5, 1, 3, 8, 7, 9, 2, 10, 4, 6};
         //int data[] = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-        ArrayUtils.print("ELEMENTS BEFORE SORT :", elements); // [ 5 1 3 8 7 9 2 10 4 6 ]
-        sort(elements);
-        ArrayUtils.print("ELEMENTS AFTER SORT ( ASCENDING ) :", elements); // [ 1 2 3 4 5 6 7 8 9 10 ]
+        ArrayUtils.print("ELEMENTS BEFORE SORT :", a); // [ 5 1 3 8 7 9 2 10 4 6 ]
+        sortOfKLargestElements(a, 3);
+        ArrayUtils.print("ELEMENTS AFTER SORT ( ASCENDING ) :", a); // [ 1 2 3 4 5 6 7 8 9 10 ]
     }
 
-    private static void sort(int elements[]) {
-        int n = elements.length;
+    private static void sort(int a[]) {
+        int n = a.length;
         boolean sorted = false;
         int i = n - 1;
         while (!sorted) {
             sorted = true;
             for (int j = 0; j < i; j++) {
-                if (elements[j + 1] < elements[j]) {
-                    ArrayUtils.swapIndexes(elements, j, j + 1);
+                if (a[j + 1] < a[j]) {
+                    ArrayUtils.swapIndexes(a, j, j + 1);
                     sorted = false;
                 }
             }
             i--;
         }
         System.out.println("\n NUMBER OF PASSES ::: " + (n - i - 1));
+    }
+
+    private static void sortOfKLargestElements(int a[], int k) {
+        int n = a.length;
+        int count = 0;
+        for (int i = n-1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (a[j+1] > a[j])
+                    ArrayUtils.swapIndexes(a, j, j + 1);
+            }
+            count++;
+            if (count == k)
+                break;
+        }
     }
 }

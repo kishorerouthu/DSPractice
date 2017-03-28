@@ -1,14 +1,17 @@
-package com.ds.practice.sort.quick.problems;
+package com.ds.practice.sort.bucket;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.InputMismatchException;
+import java.util.List;
 
 /**
- * Created by kishore on 17/2/17.
+ * Created by kishore on 12/3/17.
  */
-public class PromNight {
+public class BucketSortPractice {
 
     static int numChar;
     static int curChar;
@@ -17,83 +20,45 @@ public class PromNight {
     static PrintWriter out;
 
     public static void main(String[] args) throws IOException {
+
         stream = System.in;
         out = new PrintWriter(System.out);
 
-        int t = readInt();
-        for (int i = 0; i < t; i++) {
-            int m = readInt();
-            int n = readInt();
+        int n = readInt();
+        int a[] = new int[n];
+        List<Integer> b[] = new List[10];
 
-            int b[] = new int[m];
-            for (int j = 0; j < m; j++) {
-                b[j] = readInt();
+        for (int i = 0; i < n; i++) {
+            a[i] = readInt();
+            int j = countSetBits(a[i]);
+            if (b[j] == null)
+                b[j] = new ArrayList<Integer>();
+
+            b[j].add(a[i]);
+        }
+
+        for (int k = 0; k < 10; k++) {
+            if (b[k] != null) {
+                Collections.sort(b[k]);
+                for (Integer val : b[k])
+                    out.print(val + " ");
+                out.println();
             }
-
-            int g[] = new int[n];
-            for (int k = 0; k < n; k++) {
-                g[k] = readInt();
-            }
-
-            String result = "";
-            if (m > n) {
-                result = "NO";
-            } else {
-                sort(b, 0, m-1);
-                sort(g, 0, n-1);
-
-                int k = 0;
-                int l = 0;
-                int found = 0;
-                while (k < m && l < n) {
-                    if (b[k] > g[l]) {
-                        k++; l++; found++;
-                    } else {
-                        l++;
-                    }
-                }
-
-                result = (found == m) ? "YES" : "NO";
-            }
-            out.println(result);
         }
 
         out.flush();
         out.close();
     }
 
-
-    private static void sort(int a[], int l, int r) {
-        if (l < r) {
-            int p = parition(a, l ,r);
-            sort(a, l, p-1);
-            sort(a, p+1, r);
+    private static int countSetBits(int n) {
+        int count = 0;
+        while (n != 0) {
+            count += n & 1;
+            n >>= 1;
         }
+        return count;
     }
 
-    private static int parition(int a[], int l, int r) {
-
-        int i = l-1;
-        int j = l;
-        int p = a[r];
-
-        while (j < r) {
-
-            if (a[j] < p) {
-                i++;
-                int temp = a[j];
-                a[j] = a[i];
-                a[i] = temp;
-            }
-            j++;
-        }
-
-        //Place pivot at right position i+1
-        a[r] = a[i+1];
-        a[i+1] = p;
-        return i+1;
-
-    }
 
     public static int read() throws IOException {
         if (numChar <= curChar) {
@@ -155,4 +120,5 @@ public class PromNight {
     public static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }
+
 }

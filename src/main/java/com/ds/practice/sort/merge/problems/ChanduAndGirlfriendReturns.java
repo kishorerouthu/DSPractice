@@ -1,4 +1,4 @@
-package com.ds.practice.sort.quick.problems;
+package com.ds.practice.sort.merge.problems;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,9 +6,39 @@ import java.io.PrintWriter;
 import java.util.InputMismatchException;
 
 /**
- * Created by kishore on 17/2/17.
+ * Created by kishore on 9/3/17.
+ *
+ * In the previous problem Chandu bought some unsorted arrays and sorted them (in non-increasing order).
+ * Now, he has many sorted arrays to give to his girlfriend.
+ * But, the number of sorted arrays are very large so Chandu decided to merge two sorted arrays into one sorted array.
+ * But he is too lazy to do that.
+ * So, he asked your help to merge the two sorted arrays into one sorted array (in non-increasing order).
+ *
+ * Input:
+ * First line contains an integer T, denoting the number of test cases.
+ * First line of each test case contains two space separated integers N and M, denoting the size of the two sorted arrays.
+ * Second line of each test case contains N space separated integers, denoting the first sorted array A.
+ * Third line of each test case contains M space separated integers, denoting the second array B.
+ *
+ * Output:
+ * For each test case, print (N + M) space separated integer representing the merged array.
+ *
+ * Constraints:
+ * 1 <= T <= 100
+ * 1 <= N, M <= 5*104
+ * 0 <= Ai, Bi <= 109
+ *
+ * SAMPLE INPUT
+ * 1
+ * 4 5
+ * 9 7 5 3
+ * 8 6 4 2 0
+ *
+ * SAMPLE OUTPUT
+ * 9 8 7 6 5 4 3 2 0
+ *
  */
-public class PromNight {
+public class ChanduAndGirlfriendReturns {
 
     static int numChar;
     static int curChar;
@@ -17,83 +47,61 @@ public class PromNight {
     static PrintWriter out;
 
     public static void main(String[] args) throws IOException {
+
         stream = System.in;
         out = new PrintWriter(System.out);
 
         int t = readInt();
-        for (int i = 0; i < t; i++) {
-            int m = readInt();
+        while (t-- != 0) {
             int n = readInt();
+            int m = readInt();
 
-            int b[] = new int[m];
-            for (int j = 0; j < m; j++) {
-                b[j] = readInt();
-            }
+            long a[] = new long[n];
+            for (int i = 0; i < n; i++)
+                a[i] = readLong();
 
-            int g[] = new int[n];
-            for (int k = 0; k < n; k++) {
-                g[k] = readInt();
-            }
+            long b[] = new long[m];
+            for (int i = 0; i < m; i++)
+                b[i] = readLong();
 
-            String result = "";
-            if (m > n) {
-                result = "NO";
-            } else {
-                sort(b, 0, m-1);
-                sort(g, 0, n-1);
+            long c[] = new long[n + m];
+            merge(a, b, c, n, m);
 
-                int k = 0;
-                int l = 0;
-                int found = 0;
-                while (k < m && l < n) {
-                    if (b[k] > g[l]) {
-                        k++; l++; found++;
-                    } else {
-                        l++;
-                    }
-                }
+            for (long val : c)
+                out.printf("%d ", val);
 
-                result = (found == m) ? "YES" : "NO";
-            }
-            out.println(result);
+            out.println();
         }
 
         out.flush();
         out.close();
     }
 
+    private static void merge(long a[], long b[], long c[], int n, int m) {
 
-    private static void sort(int a[], int l, int r) {
-        if (l < r) {
-            int p = parition(a, l ,r);
-            sort(a, l, p-1);
-            sort(a, p+1, r);
-        }
-    }
-
-    private static int parition(int a[], int l, int r) {
-
-        int i = l-1;
-        int j = l;
-        int p = a[r];
-
-        while (j < r) {
-
-            if (a[j] < p) {
+        int k = 0;
+        int i = 0;
+        int j = 0;
+        while (i < n && j < m) {
+            if (a[i] >= b[j]) {
+                c[k] = a[i];
                 i++;
-                int temp = a[j];
-                a[j] = a[i];
-                a[i] = temp;
+            } else {
+                c[k] = b[j];
+                j++;
             }
-            j++;
+            k++;
         }
 
-        //Place pivot at right position i+1
-        a[r] = a[i+1];
-        a[i+1] = p;
-        return i+1;
+        while (i < n)
+            c[k++] = a[i++];
+
+        while (j < m)
+            c[k++] = b[j++];
 
     }
+
+
 
     public static int read() throws IOException {
         if (numChar <= curChar) {
@@ -155,4 +163,5 @@ public class PromNight {
     public static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }
+
 }
