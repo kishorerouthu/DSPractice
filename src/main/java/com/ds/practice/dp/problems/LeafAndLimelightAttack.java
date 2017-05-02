@@ -72,23 +72,37 @@ public class LeafAndLimelightAttack {
         out = new PrintWriter(System.out);
 
         int t = readInt();
-        final Map<Long, Long> lookup = new HashMap<Long, Long>();
         long a[] = new long[t];
+        long even[] = new long[t];
+        long odd[] = new long[t];
+        int ec = 0;
+        int oc = 0;
         for (int i = 0; i < t; i++) {
             a[i] = readLong();
+            if (a[i] % 2 == 0)
+                even[ec++] = a[i];
+            else
+                odd[oc++] = a[i];
         }
 
-        long startTime = System.currentTimeMillis();
-        long b[] = Arrays.copyOf(a, t);
-        Arrays.sort(b);
-        for (long n : b)
+        final Map<Long, Long> lookup = new HashMap<Long, Long>();
+        Arrays.sort(even);
+        for (long n : even) {
+            if (n == 0)
+                continue;
             getSum(n, lookup);
-        long endTime = System.currentTimeMillis();
+        }
 
-        for (long n : a)
+        Arrays.sort(odd);
+        for (long n : odd) {
+            if (n == 0)
+                continue;
+            getSum(n, lookup);
+        }
+
+        for (long n : a) {
             out.println(lookup.get(n));
-
-        out.println("Time - Taken :: " + (endTime - startTime));
+        }
 
         out.flush();
         out.close();
