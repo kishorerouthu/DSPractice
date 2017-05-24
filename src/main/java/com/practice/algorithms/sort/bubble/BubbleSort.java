@@ -1,6 +1,6 @@
 package com.practice.algorithms.sort.bubble;
 
-import com.practice.utils.ArrayUtils;
+import com.utils.ArrayUtils;
 
 /**
  * BubbleSort is the simplest sorting algorithm that works by repeatedly swapping

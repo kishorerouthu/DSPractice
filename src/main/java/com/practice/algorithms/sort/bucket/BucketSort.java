@@ -2,11 +2,10 @@ package com.practice.algorithms.sort.bucket;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import com.practice.utils.ArrayUtils;
+import com.utils.ArrayUtils;
 
 /**
  * Created by kishore on 12/3/17.

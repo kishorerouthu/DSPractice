@@ -1,6 +1,6 @@
 package com.practice.algorithms.sort.selection;
 
-import com.practice.utils.ArrayUtils;
+import com.utils.ArrayUtils;
 
 /**
  * The selection sort algorithm sorts an array by repeatedly finding the minimum element

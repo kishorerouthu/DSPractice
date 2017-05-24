@@ -1,6 +1,6 @@
 package com.practice.algorithms.sort.merge;
 
-import com.practice.utils.ArrayUtils;
+import com.utils.ArrayUtils;
 
 /**
  * MergeSort is a Divide and Conquer algorithm. It divides the input array in two halves,

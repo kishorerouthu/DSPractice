@@ -1,6 +1,6 @@
 package com.practice.algorithms.sort.quick;
 
-import com.practice.utils.ArrayUtils;
+import com.utils.ArrayUtils;
 
 /**
  *

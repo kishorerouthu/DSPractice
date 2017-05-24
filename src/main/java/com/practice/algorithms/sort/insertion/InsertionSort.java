@@ -1,6 +1,6 @@
 package com.practice.algorithms.sort.insertion;
 
-import com.practice.utils.ArrayUtils;
+import com.utils.ArrayUtils;
 
 /**
  * Insertion sort takes the element from unsorted portion and find the
