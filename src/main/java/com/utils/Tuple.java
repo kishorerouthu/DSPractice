@@ -1,4 +1,4 @@
-package com.practice;
+package com.utils;
 
 /**
  * Created by Kishore Routhu on 15/11/16 12:37 PM.

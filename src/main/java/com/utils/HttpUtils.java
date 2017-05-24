@@ -1,4 +1,4 @@
-package com.practice;
+package com.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
