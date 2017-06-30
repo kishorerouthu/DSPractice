@@ -108,14 +108,15 @@ public class LeafAndLimelightAttack {
 
    private static long getSum(long n, Map<Long, Long> lookup) {
 
-        //Base case for (1 X 1) and (0 X 0) matrix
+
+       if (lookup.get(n) != null)
+           return lookup.get(n);
+
+       //Base case for (1 X 1) and (0 X 0) matrix
         if (n == 1 || n == 0) {
             lookup.put(n, n);
             return n;
         }
-
-        if (lookup.get(n) != null)
-            return lookup.get(n);
 
         /*
           sum = 4*n*n - 6*n + 6  sum of 4 corners of the matrix (n X n)

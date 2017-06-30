@@ -1,23 +1,28 @@
+package com.fights;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
- * Created by kishore on 22/5/17.
+ * Created by Kishore Routhu on 29/5/17 2:20 PM.
  */
-public class PrimePythagorian {
+public class PreviousDayOfDate {
+
 
     static int numChar;
     static int curChar;
     static byte[] buffer = new byte[1024];
     static InputStream stream;
     static PrintWriter out;
-    private static List<String> coPrime = new ArrayList<String>();
-    private static HashMap<String, Integer> gcdMap = new HashMap<String, Integer>();
+
+    static Map<String, Integer> monthDaysMap = new HashMap<String, Integer>();
+
+   static String months[] = new String[]{"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+   static List mns = Arrays.asList(months);
 
     public static void main(String[] args) throws IOException {
 
@@ -26,11 +31,25 @@ public class PrimePythagorian {
 
         int t = readInt();
         while (t > 0) {
-            int a = readInt();
-            int b = readInt();
-            int c = readInt();
+            String s[] = readLine0().split(" ");
+            int d = Integer.parseInt(s[0]);
+            String m = s[1];
+            int y = Integer.parseInt(s[2]);
 
-            out.println(gcd(a, b, c) == 1? "YES" : "NO");
+            Date date = new Date();
+            date.setYear(y%1900);
+            date.setMonth(mns.indexOf(m)+1);
+            date.setDate(d);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.DATE, -30);
+            Date previousDate = cal.getTime();
+            DateFormat format = new SimpleDateFormat("dd MMM yyyy");
+            String previousDay = format.format(previousDate);
+
+            out.println(previousDay);
+
             t--;
         }
 
@@ -38,16 +57,16 @@ public class PrimePythagorian {
         out.close();
     }
 
-    private static int gcd(int a, int b, int c) {
-        int limit = Math.min(a, b);
-        limit = Math.min(limit, c);
-        for (int n = limit; n >= 2; n--) {
-            if ((a % n == 0) && (b % n == 0) && (c % n == 0)) {
-                return n;
+    private static String readLine0() throws IOException {
+        StringBuilder buf = new StringBuilder ();
+        int c = read ();
+        while (c != '\n' && c != -1){
+            if (c != '\r'){
+                buf.appendCodePoint (c);
             }
+            c = read ();
         }
-
-        return 1;
+        return buf.toString ();
     }
 
     private static int read() throws IOException {
@@ -89,7 +108,6 @@ public class PrimePythagorian {
             return -res;
         return res;
     }
-
     private static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }

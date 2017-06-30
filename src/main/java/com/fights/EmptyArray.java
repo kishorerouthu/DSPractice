@@ -1,13 +1,14 @@
+package com.fights;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
-import java.util.InputMismatchException;
+import java.util.*;
 
 /**
- * Created by kishore on 19/5/17.
+ * Created by kishore on 17/5/17.
  */
-public class Coolness {
+public class EmptyArray {
 
     static int numChar;
     static int curChar;
@@ -21,46 +22,26 @@ public class Coolness {
         out = new PrintWriter(System.out);
 
         int t = readInt();
+        TreeSet<Integer> set = new TreeSet<Integer>();
         while (t > 0) {
-            int r = readInt();
-            int k = readInt();
-            int count = 0;
-            for (int i = 5; i <=r; i++)
-                if (coolness(i) >= k)
-                    count++;
+            int n = readInt();
+            if (n == 1 || n == 2) {
+                 int v = readInt();
+                 if (n == 1)
+                     set.add(v);
+                 else if (!set.remove(v))
+                     out.println("-1");
 
-            out.println(count);
+            } else if (n == 3)
+                out.println(set.isEmpty()? "-1" : set.last());
+            else
+                out.println(set.isEmpty()? "-1" : set.first());
 
             t--;
         }
 
         out.flush();
         out.close();
-    }
-
-    private static int coolness(int n) {
-        String binary = Integer.toString(n, 2);
-        int clsCount = 0;
-        char c[] = binary.toCharArray();
-        for (int i = 0; i < c.length-2; i++) {
-            if (c[i] == '1' && c[i + 1] == '0' & c[i + 2] == '1') {
-                clsCount++;
-                i += 2;
-            } else i++;
-        }
-        return clsCount;
-    }
-
-    private static String readLine0() throws IOException {
-        StringBuilder buf = new StringBuilder ();
-        int c = read ();
-        while (c != '\n' && c != -1){
-            if (c != '\r'){
-                buf.appendCodePoint (c);
-            }
-            c = read ();
-        }
-        return buf.toString ();
     }
 
     private static int read() throws IOException {
@@ -74,9 +55,6 @@ public class Coolness {
         return buffer[curChar++];
     }
 
-    private static int readInt() throws IOException, InputMismatchException {
-        return (int) readLong();
-    }
     private static long readLong() throws IOException, InputMismatchException {
         int c = read();
         if (c == -1)
@@ -101,6 +79,11 @@ public class Coolness {
             return -res;
         return res;
     }
+
+    private static int readInt() throws IOException, InputMismatchException {
+        return (int) readLong();
+    }
+
     private static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }

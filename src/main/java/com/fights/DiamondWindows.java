@@ -1,12 +1,14 @@
+package com.fights;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.InputMismatchException;
 
 /**
- * Created by kishore on 17/5/17.
+ * Created by kishore on 15/5/17.
  */
-public class EmptyArray {
+public class DiamondWindows {
 
     static int numChar;
     static int curChar;
@@ -20,26 +22,31 @@ public class EmptyArray {
         out = new PrintWriter(System.out);
 
         int t = readInt();
-        TreeSet<Integer> set = new TreeSet<Integer>();
-        while (t > 0) {
+        while (t>0) {
             int n = readInt();
-            if (n == 1 || n == 2) {
-                 int v = readInt();
-                 if (n == 1)
-                     set.add(v);
-                 else if (!set.remove(v))
-                     out.println("-1");
-
-            } else if (n == 3)
-                out.println(set.isEmpty()? "-1" : set.last());
-            else
-                out.println(set.isEmpty()? "-1" : set.first());
-
+            int m = readInt();
+            int bCount = 0;
+            int fCount = 0;
+            for (int i = 0; i < n; i++) {
+                int j = 0;
+                while (j < m) {
+                    int c = read();
+                    if (!isSpaceChar(c)) {
+                        if (c == 47)
+                            fCount++;
+                        else if (c == 92)
+                            bCount++;
+                        j++;
+                    }
+                }
+            }
+            out.println(Math.min(fCount/2 , bCount/2));
             t--;
         }
 
         out.flush();
         out.close();
+
     }
 
     private static int read() throws IOException {
@@ -85,4 +92,5 @@ public class EmptyArray {
     private static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }
+
 }

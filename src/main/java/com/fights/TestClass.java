@@ -1,4 +1,4 @@
-/**
+package com.fights; /**
  * Created by kishore on 16/2/17.
  */
 /* IMPORTANT: Multiple classes and nested static classes are supported */

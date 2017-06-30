@@ -1,13 +1,17 @@
+package com.fights;
+
+/**
+ * Created by Kishore Routhu on 8/6/17 8:03 PM.
+ */
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Map;
 
-/**
- * Created by kishore on 16/5/17.
- */
-public class Soldiers {
-
+public class Factorial {
 
     static int numChar;
     static int curChar;
@@ -15,46 +19,33 @@ public class Soldiers {
     static InputStream stream;
     static PrintWriter out;
 
+    static Map<Long, Long> lookup = new HashMap<Long, Long>();
+
     public static void main(String[] args) throws IOException {
 
         stream = System.in;
         out = new PrintWriter(System.out);
 
-        int t = readInt();
-        while (t > 0) {
-            int n = readInt();
-            int a[] = new int[n];
-            for (int i = 0; i < n; i++)
-                a[i] = readInt();
+        lookup.put(1l, 1l);
 
-            int result[] = getCounts(a, n);
-            out.printf("%d %d", result[0], result[1]);
-            out.println();
-            t--;
+        int t = readInt();
+
+        for (int i = 0; i < t; i++) {
+            long n = readLong();
+            out.println(fact(n));
         }
 
         out.flush();
         out.close();
     }
 
+    private static long fact(long n) {
 
-    private static int[] getCounts(int a[], int n) {
-        int handShakes = 0;
-        int firstBumps = 0;
-        int result[] = new int[2];
+        if (lookup.containsKey(n))
+            return lookup.get(n);
 
-        for (int i = 0; i < n; i++) {
-            for (int j = i+1; j < n; j++) {
-                if (a[i] != a[j])
-                    handShakes++;
-                else
-                    firstBumps++;
-            }
-        }
-
-        result[0] = handShakes;
-        result[1] = firstBumps;
-        return result;
+        lookup.put(n, n * fact(n - 1));
+        return lookup.get(n);
     }
 
     private static int read() throws IOException {
@@ -95,6 +86,18 @@ public class Soldiers {
 
     private static int readInt() throws IOException, InputMismatchException {
         return (int) readLong();
+    }
+
+    private static String readLine0() throws IOException {
+        StringBuilder buf = new StringBuilder ();
+        int c = read ();
+        while (c != '\n' && c != -1){
+            if (c != '\r'){
+                buf.appendCodePoint (c);
+            }
+            c = read ();
+        }
+        return buf.toString ();
     }
 
     private static boolean isSpaceChar(int c) {

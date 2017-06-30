@@ -3,8 +3,6 @@ package com.practice.algorithms.sort.merge.problems;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import com.ds.practice.utils.ArrayUtils;
-
 /**
  * Created by kishore on 28/12/16.
  * <p>

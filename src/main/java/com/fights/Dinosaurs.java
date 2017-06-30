@@ -1,12 +1,17 @@
+package com.fights;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Map;
 
 /**
- * Created by kishore on 15/5/17.
+ * Created by Kishore Routhu on 7/6/17 7:59 PM.
  */
-public class DiamondWindows {
+public class Dinosaurs {
 
     static int numChar;
     static int curChar;
@@ -19,32 +24,39 @@ public class DiamondWindows {
         stream = System.in;
         out = new PrintWriter(System.out);
 
-        int t = readInt();
-        while (t>0) {
-            int n = readInt();
-            int m = readInt();
-            int bCount = 0;
-            int fCount = 0;
-            for (int i = 0; i < n; i++) {
-                int j = 0;
-                while (j < m) {
-                    int c = read();
-                    if (!isSpaceChar(c)) {
-                        if (c == 47)
-                            fCount++;
-                        else if (c == 92)
-                            bCount++;
-                        j++;
-                    }
-                }
-            }
-            out.println(Math.min(fCount/2 , bCount/2));
-            t--;
+        int n = readInt();
+        int k = readInt();
+        int l = readInt();
+        int q = readInt();
+
+        Map<String, String> dinosaurs = new HashMap<String, String>();
+        for (int i = 0; i < n; i++) {
+            String line[] = readLine0().split(" ");
+            int a[] =  new int[3];
+            a[0] = Integer.parseInt(line[1]);
+            a[1] = Integer.parseInt(line[2]);
+            a[2] = Integer.parseInt(line[3]);
+            Arrays.sort(a);
+            String key = a[0] + "$" + a[1] + "$" + a[2];
+            dinosaurs.put(key, line[0]);
+        }
+
+        for (int i = 0; i < q; i++) {
+            String line[] = readLine0().split(" ");
+            int a[] =  new int[3];
+            a[0] = Integer.parseInt(line[0]);
+            a[1] = Integer.parseInt(line[1]);
+            a[2] = Integer.parseInt(line[2]);
+            Arrays.sort(a);
+            String key = a[0] + "$" + a[1] + "$" + a[2];
+            if (dinosaurs.containsKey(key))
+                out.println(dinosaurs.get(key));
+            else
+                out.println("You cant fool me :P");
         }
 
         out.flush();
         out.close();
-
     }
 
     private static int read() throws IOException {
@@ -87,8 +99,19 @@ public class DiamondWindows {
         return (int) readLong();
     }
 
+    private static String readLine0() throws IOException {
+        StringBuilder buf = new StringBuilder ();
+        int c = read ();
+        while (c != '\n' && c != -1){
+            if (c != '\r'){
+                buf.appendCodePoint (c);
+            }
+            c = read ();
+        }
+        return buf.toString ();
+    }
+
     private static boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }
-
 }

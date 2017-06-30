@@ -3,6 +3,7 @@ package com.practice.algorithms.dp.problems;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.ByteBuffer;
 import java.util.InputMismatchException;
 
 /**
@@ -104,7 +105,14 @@ public class ChoosingTheJudges {
     static InputStream stream;
     static PrintWriter out;
 
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args) {
+        byte a[] = new byte[]{1, 1, 1, 1, 0, 1};
+        ByteBuffer bb = ByteBuffer.wrap(a);
+        System.out.println(bb.getInt());
+    }
+
+    public static void main1(String[] args) throws IOException {
 
         stream = System.in;
         out = new PrintWriter(System.out);
@@ -117,13 +125,61 @@ public class ChoosingTheJudges {
             for (int j=0; j<n; j++) {
                 a[j] = readLong();
             }
-            long result = getMaxScore(a, n);
+            long result = getMaxScoreRec(a, n);
             System.out.printf("Case %d: %d", i+1, result);
             System.out.println();
         }
     }
 
     private static long getMaxScore(long a[], int n) {
+
+        if (n == 0)
+            return  0;
+
+        if (n == 1)
+            return a[0];
+
+        if (n == 2)
+            return Math.max(a[0], a[1]);
+
+        long table[][] = new long[n+1][n+1];
+
+        //fill 0th row with zero and 1st row of all columns with a[0]
+        for (int i = 0; i < n+1; i++) {
+            table[0][i] = 0;
+            if (i >= 1)
+                table[1][i] = a[0];
+        }
+
+        //fill 0th column with zero and 1st column of all rows with a[0]
+        for (int i = 0; i < n+1; i++) {
+            table[i][0] = 0;
+            if (i >= 1)
+                table[i][1] = a[0];
+        }
+
+        for (int i = 2; i < n+1; i++)
+            for (int j = 2; j < n+1; j++)
+                if (j <= i)
+                    table[i][j] = Math.max(table[i][j-1], a[j-1] + table[i][j-2]);
+                else
+                    table[i][j] = table[i][j-1];
+
+        return table[n][n];
+    }
+
+    private static long getMaxScoreRec(long a[], int n) {
+
+        if (n == 1)
+            return a[0];
+
+        if (n <= 1)
+            return 0;
+
+        return Math.max(getMaxScoreRec(a, n-1), a[n-1] + getMaxScoreRec(a, n-2));
+    }
+
+    private static long getMaxScoreNonDp(long a[], int n) {
         long sum = a[0];
         int pivot_index = 0;
         int previous_index = 0;

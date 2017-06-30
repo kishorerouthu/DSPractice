@@ -1,19 +1,25 @@
+package com.fights;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.List;
 
 /**
- * Created by kishore on 15/5/17.
+ * Created by kishore on 22/5/17.
  */
-public class TwoStrings {
-
+public class PrimePythagorian {
 
     static int numChar;
     static int curChar;
     static byte[] buffer = new byte[1024];
     static InputStream stream;
     static PrintWriter out;
+    private static List<String> coPrime = new ArrayList<String>();
+    private static HashMap<String, Integer> gcdMap = new HashMap<String, Integer>();
 
     public static void main(String[] args) throws IOException {
 
@@ -21,34 +27,29 @@ public class TwoStrings {
         out = new PrintWriter(System.out);
 
         int t = readInt();
-        while (t>0) {
-            String s1 = readLine0();
-            String s2 = readLine0();
+        while (t > 0) {
+            int a = readInt();
+            int b = readInt();
+            int c = readInt();
 
-            String result = "No";
-            for (char c : s1.toCharArray())
-                if (s2.contains(c+""))
-                    result = "Yes";
-
-            out.println(result);
+            out.println(gcd(a, b, c) == 1? "YES" : "NO");
             t--;
         }
 
         out.flush();
         out.close();
-
     }
 
-    private static String readLine0() throws IOException {
-        StringBuilder buf = new StringBuilder ();
-        int c = read ();
-        while (c != '\n' && c != -1){
-            if (c != '\r'){
-                buf.appendCodePoint (c);
+    private static int gcd(int a, int b, int c) {
+        int limit = Math.min(a, b);
+        limit = Math.min(limit, c);
+        for (int n = limit; n >= 2; n--) {
+            if ((a % n == 0) && (b % n == 0) && (c % n == 0)) {
+                return n;
             }
-            c = read ();
         }
-        return buf.toString ();
+
+        return 1;
     }
 
     private static int read() throws IOException {
@@ -60,6 +61,10 @@ public class TwoStrings {
             }
         }
         return buffer[curChar++];
+    }
+
+    private static int readInt() throws IOException, InputMismatchException {
+        return (int) readLong();
     }
 
     private static long readLong() throws IOException, InputMismatchException {
@@ -85,10 +90,6 @@ public class TwoStrings {
         if (negative)
             return -res;
         return res;
-    }
-
-    private static int readInt() throws IOException, InputMismatchException {
-        return (int) readLong();
     }
 
     private static boolean isSpaceChar(int c) {
