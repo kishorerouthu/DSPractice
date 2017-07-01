@@ -5,33 +5,33 @@ package com.css.ds.practice.algorithms.search.binary.problems;
  */
 /* IMPORTANT: Multiple classes and nested static classes are supported */
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import com.css.ds.io.IOProvider;
 
 
 public class FindRanks {
         public static void main (String args[])throws Exception {
-            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-            String line = br.readLine();
+            IOProvider io = IOProvider.getConsoleInstance();
+            String line = io.readLine();
             int N = Integer.parseInt(line);
             long a[] = new long[N];
-            String str = br.readLine();
+            String str = io.readLine();
             String arr[] = str.split(" ");
             int j = 0;
             for (int i = 0; i < N; i++, j++) {
                 if (j == arr.length) {
                     j = 0;
-                    arr = br.readLine().split(" ");
+                    arr = io.readLine().split(" ");
                 }
                 a[i] = Long.parseLong(arr[j]);
             }
 
-            String line1 = br.readLine();
+            String line1 = io.readLine();
             int M = Integer.parseInt(line1);
             for (int k = 0; k < M; k++) {
-                long x = Integer.parseInt(br.readLine());
-                System.out.println(search(a, 0, a.length - 1, x));
+                long x = Integer.parseInt(io.readLine());
+                io.println(search(a, 0, a.length - 1, x));
             }
+            io.finish();
         }
 
 

@@ -1,10 +1,9 @@
 package com.css.ds.practice.algorithms.search.binary.problems;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.InputMismatchException;
+
+import com.css.ds.io.IOProvider;
 
 /**
  * Created by kishore on 9/5/17.
@@ -65,23 +64,18 @@ import java.util.InputMismatchException;
  */
 public class BishuAndSoldiers {
 
-    static int numChar;
-    static int curChar;
-    static byte[] buffer = new byte[1024];
-    static InputStream stream;
-    static PrintWriter out;
 
     public static void main(String[] args) throws IOException {
-        stream = System.in;
-        out = new PrintWriter(System.out);
 
-        int n = readInt();
+        IOProvider io = IOProvider.getConsoleInstance();
+
+        int n = io.readInt();
         int a[] = new int[n];
 
-        a[0] = readInt();
+        a[0] = io.readInt();
 
         for (int i = 1; i < n; i++) {
-            a[i] = readInt();
+            a[i] = io.readInt();
         }
 
         Arrays.sort(a);
@@ -91,15 +85,14 @@ public class BishuAndSoldiers {
         for (int j = 1; j < n; j++)
             sum[j] = sum[j-1] + a[j];
 
-        int q = readInt();
+        int q = io.readInt();
         for (int j = 0; j < q; j++) {
-            int k = readInt();
+            int k = io.readInt();
             int index = bSearch(a, n, k);
-            out.println(index + " "+ sum[index-1]);
+            io.println(index + " "+ sum[index-1]);
         }
 
-        out.flush();
-        out.close();
+        io.finish();
 
     }
 
@@ -116,49 +109,4 @@ public class BishuAndSoldiers {
 
         return l;
     }
-
-    private static int read() throws IOException {
-        if (numChar <= curChar) {
-            curChar = 0;
-            numChar = stream.read(buffer);
-            if (numChar <= 0) {
-                return -1;
-            }
-        }
-        return buffer[curChar++];
-    }
-
-    private static long readLong() throws IOException, InputMismatchException {
-        int c = read();
-        if (c == -1)
-            throw new IOException();
-        while (isSpaceChar(c)) {
-            c = read();
-        }
-        boolean negative = false;
-        if (c == '-') {
-            negative = true;
-            c = read();
-        }
-        long res = 0;
-        while (!isSpaceChar(c)) {
-            if (c < '0' || c > '9')
-                throw new InputMismatchException();
-            res *= 10;
-            res += (c - '0');
-            c = read();
-        }
-        if (negative)
-            return -res;
-        return res;
-    }
-
-    private static int readInt() throws IOException, InputMismatchException {
-        return (int) readLong();
-    }
-
-    private static boolean isSpaceChar(int c) {
-        return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
-    }
-
 }

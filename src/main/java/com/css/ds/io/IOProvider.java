@@ -77,9 +77,23 @@ public final class IOProvider {
         return res;
     }
 
+    public String readLine() throws IOException {
+        StringBuilder buf = new StringBuilder ();
+        int c = read ();
+        while (c != '\n' && c != -1){
+            if (c != '\r'){
+                buf.appendCodePoint (c);
+            }
+            c = read ();
+        }
+        return buf.toString ();
+    }
+
     public boolean isSpaceChar(int c) {
         return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
     }
+
+
 
     public void println(String s) {
         out.println(s);
