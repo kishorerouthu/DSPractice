@@ -1,11 +1,10 @@
-package com.css.ds.practice.datastructers.arrays;
+package com.css.ds.practice.ds.arrays;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Map;
+
+import com.css.ds.io.IOProvider;
 
 /**
  * Created by Kishore Routhu on 17/6/17 12:45 PM.
@@ -63,85 +62,26 @@ import java.util.Map;
 
 public class MemoriseMe {
 
-    static int numChar;
-    static int curChar;
-    static byte[] buffer = new byte[1024];
-    static InputStream stream;
-    static PrintWriter out;
-
     public static void main(String[] args) throws IOException {
 
-        stream = System.in;
-        out = new PrintWriter(System.out);
-
-        int n = readInt();
+        IOProvider io = IOProvider.getConsoleInstance();
+        int n = io.readInt();
         Map<Integer, Integer> lookup = new HashMap<Integer, Integer>();
         for (int i = 0; i < n; i++) {
-            int v = readInt();
+            int v = io.readInt();
             Integer count = lookup.get(v);
             count = count == null ? 0 : count;
             count++;
             lookup.put(v, count);
         }
 
-        int q = readInt();
+        int q = io.readInt();
         while (q > 0) {
-            int qi = readInt();
+            int qi = io.readInt();
             Integer v = lookup.get(qi);
-            out.println(v == null? "NOT PRESENT" : v);
+            io.println(v == null? "NOT PRESENT" : v);
             q--;
         }
-
-        out.flush();
-        out.close();
-
-    }
-
-    private static int read() throws IOException {
-        if (numChar <= curChar) {
-            curChar = 0;
-            numChar = stream.read(buffer);
-            if (numChar <= 0) {
-                return -1;
-            }
-        }
-        return buffer[curChar++];
-    }
-
-    private static byte readByte() throws IOException {
-        return (byte) readInt();
-    }
-
-    private static int readInt() throws IOException, InputMismatchException {
-        return (int) readLong();
-    }
-
-    private static long readLong() throws IOException, InputMismatchException {
-        int c = read();
-        if (c == -1)
-            throw new IOException();
-        while (isSpaceChar(c)) {
-            c = read();
-        }
-        boolean negative = false;
-        if (c == '-') {
-            negative = true;
-            c = read();
-        }
-        long res = 0;
-        while (!isSpaceChar(c)) {
-            if (c < '0' || c > '9')
-                throw new InputMismatchException();
-            res *= 10;
-            res += (c - '0');
-            c = read();
-        }
-        if (negative)
-            return -res;
-        return res;
-    }
-
-    private static boolean isSpaceChar(int c) {
-        return c == ' ' || c == '\n' || c == '\t' || c == '\r' || c == -1;
+        io.finish();
     }
 }
