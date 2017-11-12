@@ -1,9 +1,8 @@
 package com.css.ds.practice.algorithms.search.binary.problems;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import javax.jws.soap.SOAPBinding;
+
+import com.css.ds.io.IOProvider;
 
 /**
  * Problem Statement :
@@ -41,18 +40,18 @@ import javax.jws.soap.SOAPBinding;
 public class SherlockNumbers {
 
     public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        byte T = Byte.parseByte(br.readLine());
+        IOProvider io = IOProvider.getConsoleInstance();
+        byte T = Byte.parseByte(io.readLine());
         long N, P;
         int K;
         for (int i=0; i<T; i++) {
-            String line = br.readLine();
+            String line = io.readLine();
             String input[] = line.split(" ");
             N = Long.parseLong(input[0]);
             K = Integer.parseInt(input[1]);
             P = Long.parseLong(input[2]);
 
-            String[] pLine = br.readLine().split(" ");
+            String[] pLine = io.readLine().split(" ");
 
             long ans = -1;
             if ((N-K) < P) {
@@ -84,7 +83,7 @@ public class SherlockNumbers {
                         ans = current + (P - count);
                 }
             }
-            System.out.println(ans);
+            io.println(ans);
         }
     }
 }

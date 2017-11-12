@@ -94,6 +94,9 @@ public final class IOProvider {
     }
 
 
+    public void newLine() {
+        out.println();
+    }
 
     public void println(String s) {
         out.println(s);
